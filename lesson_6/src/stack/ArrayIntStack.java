@@ -46,11 +46,12 @@ public class ArrayIntStack implements IntStack {
     public int pop() throws Exception {
         if (getSize()==0){
             throw new Exception("The stack is empty");
+        } else {
+            values[size-1]=0;
+            --size;
+            return values[size-1];
         }
-        int popped = values[size-1];
-        values[size-1]=0;
-        --size;
-        return popped;
+
     }
 
     /**
@@ -68,7 +69,6 @@ public class ArrayIntStack implements IntStack {
     public void clear() {
         values= new int[10];
         size=0;
-
     }
 
     /**
