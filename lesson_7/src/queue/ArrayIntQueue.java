@@ -8,10 +8,10 @@ public class ArrayIntQueue implements IntQueue {
     private int back;
 
     public ArrayIntQueue() {
-        values = new int[5];
+        values = new int[10];
         size = 0;
-        front =0;
-        back=0;
+        front = 0;
+        back = 0;
     }
 
     /**
@@ -21,36 +21,39 @@ public class ArrayIntQueue implements IntQueue {
      */
     @Override
     public void enqueue(int value) {
-        if (front==0) {
-            values[back]=value;
+        if (front == 0) {
+            values[back] = value;
             back++;
             size++;
         } else {
-            values[back]=value;
-            back++;
+            back = front - 1;
+            values[back] = value;
             size++;
         }
 
     }
+
     /**
      * Removes and returns the front most element of the queue
+     *
      * @return the front most element of the queue
      * @throws Exception if thw queue is empty
      */
     @Override
     public int dequeue() throws Exception {
-        if (getSize()==0){
+        if (getSize() == 0) {
+            clear();
             throw new Exception("Queue is empty");
-        } else if (back==values.length && front!=0){
-            values[front]=0;
-            back=0;
+        } else if (back == values.length && front != 0) {
+            values[front] = 0;
+            back = 0;
             front++;
             size--;
-        }  else {
-            values[front]=0;
+        } else {
+            values[front] = 0;
             size--;
-            if (front==values.length-1){
-                clear();
+            if (front == values.length - 1) {
+                front = back - 1;
             } else {
                 front++;
             }
@@ -74,8 +77,8 @@ public class ArrayIntQueue implements IntQueue {
     public void clear() {
         values = new int[5];
         size = 0;
-        front =0;
-        back=0;
+        front = 0;
+        back = 0;
     }
 
     /**
@@ -84,12 +87,12 @@ public class ArrayIntQueue implements IntQueue {
     @Override
     public void printQueue() {
         for (int i = 0; i < values.length; i++) {
-            if (i==0) {
-                System.out.print("["+values[i]+", ");
-            } else if (i==values.length-1){
-                System.out.println(values[i]+"]");
+            if (i == 0) {
+                System.out.print("[" + values[i] + ", ");
+            } else if (i == values.length - 1) {
+                System.out.println(values[i] + "]");
             } else {
-                System.out.print(values[i]+", ");
+                System.out.print(values[i] + ", ");
             }
         }
     }
