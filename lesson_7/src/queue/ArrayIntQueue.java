@@ -1,5 +1,7 @@
 package queue;
 
+import java.util.Arrays;
+
 public class ArrayIntQueue implements IntQueue {
 
     private int[] values;
@@ -8,7 +10,7 @@ public class ArrayIntQueue implements IntQueue {
     private int back;
 
     public ArrayIntQueue() {
-        values = new int[10];
+        values = new int[5];
         size = 0;
         front = 0;
         back = 0;
@@ -21,15 +23,36 @@ public class ArrayIntQueue implements IntQueue {
      */
     @Override
     public void enqueue(int value) {
+
         if (front == 0) {
-            values[back] = value;
-            back++;
-            size++;
+            if (values.length==getSize()){
+                int[] newValues = new int[values.length*2];
+                System.arraycopy(values, 0, newValues, 0, values.length);
+                values=newValues;
+            }
+
         } else {
-            back = front - 1;
-            values[back] = value;
-            size++;
+            if (values.length==getSize()){
+                int[] b = Arrays.copyOfRange(values,front, values.length);
+                int[] c = Arrays.copyOfRange(values,back-front, front);
+                int[] newV = new int[values.length];
+                System.arraycopy(b, 0, newV, 0, b.length);
+                System.arraycopy(c, 0, newV, b.length, c.length);
+                values=newV;
+                front=0;
+                back=size;
+                int[] newValues = new int[values.length*2];
+                System.arraycopy(values, 0, newValues, 0, newV.length);
+                values=newValues;
+            }
+            if (back==values.length){
+                back = 0;
+            }
+
         }
+        values[back] = value;
+        back++;
+        size++;
 
     }
 
@@ -42,7 +65,6 @@ public class ArrayIntQueue implements IntQueue {
     @Override
     public int dequeue() throws Exception {
         if (getSize() == 0) {
-            clear();
             throw new Exception("Queue is empty");
         } else if (back == values.length && front != 0) {
             values[front] = 0;

@@ -1,34 +1,35 @@
 package queue;
 
 public class TestQueue {
+
     public static void main(String[] args) throws Exception {
+
         ArrayIntQueue queue= new ArrayIntQueue();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        queue.enqueue(4);
-        queue.enqueue(5);
-        queue.printQueue();
-        queue.dequeue();
-        queue.printQueue();
-        queue.enqueue(500);
-        queue.printQueue();
-        queue.dequeue();
-        queue.printQueue();
-        queue.enqueue(600);
-        queue.printQueue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        queue.dequeue();
-        try {
-            queue.dequeue();
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        queue.printQueue();
+        enqueueToQueue(queue,6,0);
+        dequeueFromQueue(queue,3);
+        enqueueToQueue(queue,8,111);
         queue.printFront();
         queue.printBack();
+        queue.printQueue();
+        try {
+            dequeueFromQueue(queue,12);
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+            queue.printQueue();
+        }
+
+
+    }
+    public static void enqueueToQueue(ArrayIntQueue queue, int nbr, int val) {
+        for (int i = 1; i <= nbr; i++) {
+           queue.enqueue(i+val);
+        }
+        queue.printQueue();
+    }
+    public static void dequeueFromQueue(ArrayIntQueue queue, int nbr) throws Exception{
+        for (int i = 1; i <= nbr; i++) {
+                queue.dequeue();
+        }
+        queue.printQueue();
     }
 }
